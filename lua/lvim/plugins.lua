@@ -27,6 +27,11 @@ local core_plugins = {
       require("lvim.core.mason").setup()
     end,
     cmd = { "Mason", "MasonInstall", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
+    build = function()
+      pcall(function()
+        require("mason-registry").refresh()
+      end)
+    end,
     lazy = true,
   },
   {
@@ -117,6 +122,7 @@ local core_plugins = {
       require("lvim.core.autopairs").setup()
     end,
     enabled = lvim.builtin.autopairs.active,
+    dependencies = { "nvim-treesitter/nvim-treesitter", "hrsh7th/nvim-cmp" },
   },
 
   -- Treesitter
