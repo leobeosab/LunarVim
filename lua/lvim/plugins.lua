@@ -17,6 +17,7 @@ local core_plugins = {
       settings.current.automatic_installation = false
     end,
     lazy = true,
+    event = "User FileOpened",
     dependencies = "mason.nvim",
   },
   { "tamago324/nlsp-settings.nvim", cmd = "LspSettings", lazy = true },
@@ -32,6 +33,7 @@ local core_plugins = {
         require("mason-registry").refresh()
       end)
     end,
+    event = "User FileOpened",
     lazy = true,
   },
   {
@@ -43,8 +45,6 @@ local core_plugins = {
     lazy = lvim.colorscheme ~= "lunar",
   },
   { "Tastyep/structlog.nvim", lazy = true },
-
-  { "nvim-lua/popup.nvim", lazy = true },
   { "nvim-lua/plenary.nvim", cmd = { "PlenaryBustedFile", "PlenaryBustedDirectory" }, lazy = true },
   -- Telescope
   {
@@ -260,6 +260,9 @@ local core_plugins = {
       require("lvim.core.dap").setup()
     end,
     lazy = true,
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+    },
     enabled = lvim.builtin.dap.active,
   },
 
@@ -359,7 +362,7 @@ local default_snapshot_path = join_paths(get_lvim_base_dir(), "snapshots", "defa
 local content = vim.fn.readfile(default_snapshot_path)
 local default_sha1 = assert(vim.fn.json_decode(content))
 
--- taken form <https://github.com/folke/lazy.nvim/blob/c7122d64cdf16766433588486adcee67571de6d0/lua/lazy/core/plugin.lua#L27>
+-- taken from <https://github.com/folke/lazy.nvim/blob/c7122d64cdf16766433588486adcee67571de6d0/lua/lazy/core/plugin.lua#L27>
 local get_short_name = function(long_name)
   local name = long_name:sub(-4) == ".git" and long_name:sub(1, -5) or long_name
   local slash = name:reverse():find("/", 1, true) --[[@as number?]]
